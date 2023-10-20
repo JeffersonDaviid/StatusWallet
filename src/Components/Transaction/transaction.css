@@ -1,0 +1,93 @@
+.transaction {
+   display: flex;
+   flex-direction: column;
+   padding: 1rem 1rem;
+   margin-bottom: 1rem;
+
+   border-radius: 14px;
+   background: #ffffff;
+   box-shadow: 5px 5px 10px #e3e3e3, -5px -5px 10px #ffffff;
+}
+
+.transaction span {
+   margin: 0;
+}
+
+.transaction-data {
+   display: flex;
+   align-items: center;
+}
+
+.transaction-date {
+   flex-grow: 1;
+   display: flex;
+   gap: 0.5rem;
+   align-items: center;
+   font-weight: bold;
+}
+
+.transaction-date-day {
+   font-size: 1.5rem;
+}
+.transaction-date-dayName {
+   font-weight: bold;
+}
+
+.transaction-date div {
+   font-weight: 300;
+}
+
+.transaction-wallet {
+   flex-grow: 1;
+   text-align: right;
+   padding-right: 1.2rem;
+   font-weight: bold;
+}
+
+.icon-showMoreDetails {
+   flex-basis: content;
+   height: 1.5rem;
+   width: 1.5rem;
+   cursor: pointer;
+   z-index: 10;
+}
+
+.transaction-moreDetails {
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
+   padding-top: 0.2rem;
+}
+
+.transaction-detail {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+.transaction-detail div {
+   display: flex;
+   align-items: center;
+   gap: 0.3rem;
+}
+
+.notseeMoreDetails {
+   opacity: 0;
+   height: 0;
+}
+
+.seeMoreDetails {
+   opacity: 1;
+   height: min-content;
+}
+
+.transaction-expense,
+.wallet-expenses {
+   color: red;
+   margin-top: 0.2rem;
+}
+
+.transaction-income,
+.wallet-incomes {
+   margin-top: 0.2rem;
+   color: green;
+}
