@@ -386,7 +386,8 @@ const TransactionInput = () => {
           className='btn btn-primary'
           type='submit'
           form='inputTrasactionForm'
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault()
             if (newTransaction.amount !== 0) handleSetNewTransaction(newTransaction)
           }}
         >
