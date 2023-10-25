@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom'
 import './App.css'
 
 import NavBar from './Components/NavBar/NavBar'
@@ -11,37 +10,39 @@ import TransactionInput from './Components/TransactionInput/TransactionInput'
 
 function App() {
   return (
-    <div className='container-app-global'>
-      <BrowserRouter>
+    <HashRouter>
+      <div className='container-app-global'>
+        {/* <BrowserRouter> */}
+        <NavBar />
         <Routes>
-          <Route
+          {/* <Route
             path='/StatusWallet/'
             element={<NavBar />}
-          >
-            <Route
-              path='/StatusWallet/'
-              Component={Home}
-            />
-            <Route
-              path='/StatusWallet/reportes'
-              Component={Reports}
-            />
-            <Route
-              path='/StatusWallet/configuracion'
-              Component={Configuration}
-            />
-            <Route
-              path='/StatusWallet/perfil'
-              Component={Profile}
-            />
-            <Route
-              path='/StatusWallet/transaccion'
-              Component={TransactionInput}
-            />
-          </Route>
+  />*/}
+          <Route
+            path='/'
+            Component={Home}
+          />
+          <Route
+            path='/reportes'
+            Component={Reports}
+          />
+          <Route
+            path='/configuracion'
+            Component={Configuration}
+          />
+          <Route
+            path='/perfil'
+            Component={Profile}
+          />
+          <Route
+            path='/transaccion'
+            Component={TransactionInput}
+          />
         </Routes>
-      </BrowserRouter>
-    </div>
+        {/* </BrowserRouter> */}
+      </div>
+    </HashRouter>
   )
 }
 

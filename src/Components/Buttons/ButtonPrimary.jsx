@@ -9,7 +9,7 @@ const ButtonPrimary = ({ to, ...props }) => {
       className='btn btn-primary'
       {...props}
     >
-      {to !== '' ? (
+      {to !== 'anyWhere' ? (
         <Link to={`/${to}`}>
           <b>{props.values}</b>
         </Link>

@@ -98,9 +98,7 @@ const Transaction = ({ transaction }) => {
         )}
       </div>
       <div
-        className={`transaction-moreDetails ${
-          seeMoreDetails ? 'seeMoreDetails' : 'notseeMoreDetails'
-        }`}
+        className={`transaction-moreDetails ${seeMoreDetails ? '' : 'notseeMoreDetails'}`}
       >
         {transaction.data.map((item, key) => {
           return (

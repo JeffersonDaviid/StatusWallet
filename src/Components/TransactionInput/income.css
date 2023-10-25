@@ -58,6 +58,6 @@
   text-align: center;
 }
 
-.buttonsContainer > a {
+.buttonsContainer > button {
   margin: 0.2rem 0.8rem;
 }

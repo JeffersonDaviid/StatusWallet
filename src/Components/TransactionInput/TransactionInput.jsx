@@ -378,11 +378,13 @@ const TransactionInput = () => {
 
       <div className='buttonsContainer'>
         <ButtonSecondary
-          to='StatusWallet/'
+          to=''
           values='Cancelar'
         />
 
-        <button
+        <ButtonPrimary
+          to=''
+          values='Guardar'
           className='btn btn-primary'
           type='submit'
           form='inputTrasactionForm'
@@ -390,9 +392,7 @@ const TransactionInput = () => {
             e.preventDefault()
             if (newTransaction.amount !== 0) handleSetNewTransaction(newTransaction)
           }}
-        >
-          <b>Guardar</b>
-        </button>
+        />
       </div>
     </form>
   )

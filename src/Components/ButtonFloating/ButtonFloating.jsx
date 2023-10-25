@@ -13,7 +13,7 @@ const ButtonFloating = () => {
   return (
     <div className={`buttonActions ${showActions ? 'buttonFloating' : ''}`.trim()}>
       <Link
-        to='/StatusWallet/transaccion'
+        to='/transaccion'
         className='icon-showActions'
       >
         <VscAdd />

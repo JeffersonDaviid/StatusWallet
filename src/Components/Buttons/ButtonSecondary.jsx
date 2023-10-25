@@ -10,7 +10,7 @@ const ButtonSecondary = ({ to, ...props }) => {
       className='btn btn-secondary'
       {...props}
     >
-      {to !== '' ? (
+      {to !== 'anyWhere' ? (
         <Link to={`/${to}`}>
           <b>{props.values}</b>
         </Link>
