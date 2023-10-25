@@ -1,0 +1,63 @@
+.transactionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-size: 1.2rem;
+}
+
+.transactionContainer > h2 {
+  text-align: center;
+  color: #004952;
+  margin: 0;
+}
+
+.typeTransactionContainer,
+.amountContainer,
+.dateContainer,
+.detailsContainer,
+.type-itemContainer,
+.acount-TransactionContainer,
+.acount-bankContainer,
+.acount-walletContainer,
+.category-itemContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: #004952;
+}
+
+.acountContainer,
+.categoryContainer,
+.typeTransactionContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-row: auto;
+  row-gap: 0.5rem;
+}
+
+.amountContainer > input,
+.detailsContainer > input,
+.dateContainer > input,
+.categoryContainer > select {
+  padding: 0.3rem 0.3rem;
+  width: 100%;
+}
+
+.typeTransactionContainer,
+.categoryContainer,
+.acountContainer {
+  border: none;
+}
+
+.buttonsContainer {
+  text-align: center;
+}
+
+.buttonsContainer > a {
+  margin: 0.2rem 0.8rem;
+}

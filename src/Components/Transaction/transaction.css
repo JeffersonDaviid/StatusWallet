@@ -24,6 +24,7 @@
    gap: 0.5rem;
    align-items: center;
    font-weight: bold;
+   color: #004952;
 }
 
 .transaction-date-day {
@@ -63,6 +64,7 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
+   user-select: none;
 }
 .transaction-detail div {
    display: flex;

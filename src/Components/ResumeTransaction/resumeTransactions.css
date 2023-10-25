@@ -3,9 +3,12 @@
    grid-template-rows: repeat(2, 1fr);
    grid-template-columns: repeat(2, 1fr);
    gap: 0.5rem;
+   padding: 1rem;
    background-color: #fff;
    font-size: 1rem;
-   border-radius: 1rem;
+   border-radius: 0.5rem;
+   color: #004952;
+   box-shadow: 5px 5px 10px #e3e3e3, -5px -5px 10px #ffffff;
 }
 
 .resumen-container span {

@@ -68,12 +68,17 @@ const NavBar = () => {
                   onClick={() => {
                      updateStatusNavItemToggleOn({
                         property: 'home',
-                        newValue: !navItemToggleOn.home,
                      });
                   }}
                >
-                  <Link to='/'>
-                     <ImHome className='nav-icon-option' />
+                  <Link to='/StatusWallet/'>
+                     <ImHome
+                        className={`link-to-page ${
+                           navItemToggleOn.home
+                              ? 'nav-icon-optionSelected'
+                              : 'nav-icon-option'
+                        }`.trim()}
+                     />
                   </Link>
                   {navItemToggleOn.home && (
                      <span className='navItemText-on'>
@@ -92,8 +97,14 @@ const NavBar = () => {
                      })
                   }
                >
-                  <Link to='/reportes'>
-                     <AiOutlineBarChart className='nav-icon-option' />
+                  <Link to='/StatusWallet/reportes'>
+                     <AiOutlineBarChart
+                        className={`link-to-page ${
+                           navItemToggleOn.reports
+                              ? 'nav-icon-optionSelected'
+                              : 'nav-icon-option'
+                        }`.trim()}
+                     />
                   </Link>
                   {navItemToggleOn.reports && (
                      <span className='navItemText-on'> Reportes</span>
@@ -109,11 +120,17 @@ const NavBar = () => {
                      })
                   }
                >
-                  <Link to='/configuracion'>
-                     <AiOutlineSetting className='nav-icon-option' />
+                  <Link to='/StatusWallet/configuracion'>
+                     <AiOutlineSetting
+                        className={`link-to-page ${
+                           navItemToggleOn.configuration
+                              ? 'nav-icon-optionSelected'
+                              : 'nav-icon-option'
+                        }`.trim()}
+                     />
                   </Link>
                   {navItemToggleOn.configuration && (
-                     <span className='navItemText-on'> Configuracion</span>
+                     <span className='navItemText-on'> Configuración</span>
                   )}
                </li>
                <li
@@ -126,8 +143,14 @@ const NavBar = () => {
                      })
                   }
                >
-                  <Link to='/perfil'>
-                     <AiOutlineUser className='nav-icon-option' />
+                  <Link to='/StatusWallet/perfil'>
+                     <AiOutlineUser
+                        className={`link-to-page ${
+                           navItemToggleOn.perfil
+                              ? 'nav-icon-optionSelected'
+                              : 'nav-icon-option'
+                        }`.trim()}
+                     />
                   </Link>
                   {navItemToggleOn.perfil && (
                      <span className='navItemText-on'> Perfil</span>

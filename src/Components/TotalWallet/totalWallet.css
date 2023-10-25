@@ -1,0 +1,41 @@
+.totalWallet {
+   display: grid;
+   grid-template-rows: 1fr repeat(2, max-content);
+   grid-template-columns: repeat(2, 1fr);
+   gap: 0.5rem;
+   padding: 1rem;
+
+   background-color: #ffffff;
+   border-radius: 0.5rem;
+   box-shadow: 5px 5px 10px #e3e3e3, -5px -5px 10px #ffffff;
+}
+
+.totalWallet-container {
+   grid-column: 1 / span 3;
+   text-align: center;
+   justify-content: center;
+}
+.totalWallet-container span:last-child {
+   font-weight: bold;
+   font-size: 2rem;
+   color: #004952;
+}
+
+.totalCash-container,
+.totalBank-container,
+.manageWallet {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.totalCash-container {
+}
+.totalBank-container {
+}
+
+.manageWallet {
+   grid-row: 3 / span 1;
+   grid-column: 1 / span 2;
+   cursor: pointer;
+}
