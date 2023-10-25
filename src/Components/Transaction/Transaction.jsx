@@ -25,6 +25,36 @@ import { FaBus } from 'react-icons/fa'
 const Transaction = ({ transaction }) => {
   const [seeMoreDetails, setSeeMoreDetails] = useState(false)
 
+  const renderNameType = (category) => {
+    switch (category) {
+      case 'salary':
+        return 'Salario'
+      case 'gift':
+        return 'Regalo'
+      case 'food':
+        return 'Comida'
+      case 'transport':
+        return 'Transporte'
+      case 'shop':
+        return 'Compras'
+      case 'rent':
+        return 'Alquiler'
+      case 'health':
+        return 'Salud'
+      case 'education':
+        return 'Educación'
+      case 'travel':
+        return 'Viajes'
+      case 'bills':
+        return 'Facturas'
+      case 'otherIncomes':
+        return 'Otros'
+      case 'otherExpenses':
+        return 'Otros'
+      default:
+        return 'Sin especificar'
+    }
+  }
   const renderIconType = (category) => {
     switch (category) {
       case 'salary':
@@ -112,7 +142,7 @@ const Transaction = ({ transaction }) => {
             >
               <div>
                 {renderIconType(item.category)}
-                <span> {item.category}</span>
+                <span>{renderNameType(item.category)}</span>
               </div>
               <span>$ {parseFloat(item.amount).toFixed(2)}</span>
             </div>

@@ -169,8 +169,6 @@ export const TransactionContextProvider = ({ children }) => {
       }
     }
 
-    console.log(newTotal)
-
     localStorage.setItem('totalMoney', JSON.stringify(newTotal))
     setTotalMoney(newTotal)
   }
@@ -182,7 +180,6 @@ export const TransactionContextProvider = ({ children }) => {
     if (totalCashInMemory !== null) {
       setTotalMoney(totalCashInMemory)
     }
-    console.log(totalCashInMemory)
   }, [])
 
   return (
@@ -193,9 +190,55 @@ export const TransactionContextProvider = ({ children }) => {
         totalMoney,
 
         handleSetNewTransaction,
+        dateConverter,
+        getTodayDate,
+        getTodayMonthYear,
       }}
     >
       {children}
     </TransactionContext.Provider>
   )
+}
+
+const dateConverter = (date) => {
+  const partesFecha = date.split('-')
+  const dia = partesFecha[2]
+  const mes = partesFecha[1]
+  const año = partesFecha[0]
+
+  const fechaFormateada = new Date(`${mes}/${dia}/${año}`)
+  const opciones = {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }
+  const fechaFinal = fechaFormateada.toLocaleDateString('es-ES', opciones)
+
+  const partesFecha2 = fechaFinal.split(' ')
+
+  const dateFinal = {
+    dayName:
+      partesFecha2[0].charAt(0).toUpperCase() +
+      partesFecha2[0].substring(1, partesFecha2[0].length - 1),
+    day: partesFecha2[1],
+    month: partesFecha2[3].charAt(0).toUpperCase() + partesFecha2[3].substring(1, 10),
+    year: partesFecha2[5],
+  }
+  // console.log(dateFinal);
+
+  return dateFinal
+}
+
+const getTodayDate = () => {
+  const currentDate = new Date()
+  currentDate.setUTCHours(currentDate.getUTCHours() - 5) // Ecuador está en UTC-5
+  console.log(currentDate)
+  return currentDate.toISOString().split('T')[0]
+}
+const getTodayMonthYear = () => {
+  let currentDate = new Date()
+  currentDate.setUTCHours(currentDate.getUTCHours() - 5) // Ecuador está en UTC-5
+  currentDate = currentDate.toISOString().split('T')[0]
+  return currentDate.substring(0, 7)
 }

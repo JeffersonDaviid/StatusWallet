@@ -1,0 +1,73 @@
+.profileContainer {
+  border-top: 1px solid red;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.inputEmailPasswordContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 90%;
+  position: relative;
+}
+
+.inputEmailPasswordContainer input {
+  border: none;
+  flex-grow: 1;
+}
+
+.input-email,
+.inputPasswordContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #fff;
+  border-radius: 1rem;
+  padding: 0.3rem 0.6rem;
+  width: 100%;
+  height: 2rem;
+}
+
+.inputPasswordContainer .icon {
+  cursor: pointer;
+}
+
+.btn-signIn {
+  width: 100%;
+  border-radius: 1rem !important;
+  background-color: #004952 !important;
+}
+
+.forgetPassword {
+  position: absolute;
+  font-size: 0.8rem;
+  cursor: pointer;
+  right: 0;
+  bottom: -1.5rem;
+}
+
+.otherSigns {
+  width: 100%;
+}
+
+.containerIcons {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 0.5rem;
+}
+.iconLoginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 1rem;
+  cursor: pointer;
+  height: 2rem;
+  width: 4rem;
+}

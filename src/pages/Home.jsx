@@ -5,6 +5,11 @@ import TotalWallet from '../Components/TotalWallet/TotalWallet'
 import ButtonFloating from '../Components/ButtonFloating/ButtonFloating'
 import { TransactionContext } from '../Context/TransactionContext'
 
+import {
+  signInWithEmailAndPasswordFront,
+  createNewUserWithEmailAndPassword,
+} from '../services/Firebase'
+
 import './home.css'
 
 const Home = () => {
@@ -12,7 +17,7 @@ const Home = () => {
 
   return (
     <div className='home'>
-      <h1>Finanzas</h1>
+      {/* <h1>Finanzas</h1> */}
       <TotalWallet />
       {lsTransaction !== undefined && lsTransaction !== null && (
         <ResumeTransaction resume={resumenTransactions} />

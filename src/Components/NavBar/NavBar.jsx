@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
 import { Outlet, Link } from 'react-router-dom'
 
@@ -8,10 +8,12 @@ import './navBar.css'
 import { ImHome } from 'react-icons/im'
 
 import { AiOutlineSetting, AiOutlineBarChart, AiOutlineUser } from 'react-icons/ai'
+import { TransactionContext } from '../../Context/TransactionContext'
 
 const NavBar = () => {
   const [navItemToggleOn, setNavItemToggleOn] = useState({ home: true })
 
+  const { getTodayMonthYear } = useContext(TransactionContext)
   useEffect(() => {
     const oldStatusNav = JSON.parse(sessionStorage.getItem('navData'))
 
@@ -57,6 +59,39 @@ const NavBar = () => {
 
   return (
     <>
+      <div className='headerNavContainer'>
+        <li
+          className='link-to-page logoApp'
+          onClick={() =>
+            updateStatusNavItemToggleOn({
+              property: 'home',
+            })
+          }
+        >
+          <Link to='/'>
+            <span>#Finanza</span>
+          </Link>
+        </li>
+        <div className='inputDateProfileContainer'>
+          <input
+            type='month'
+            min='2023-01'
+            defaultValue={getTodayMonthYear()}
+          />
+          <li
+            className='link-to-page avatarProfile'
+            onClick={() =>
+              updateStatusNavItemToggleOn({
+                property: 'profile',
+              })
+            }
+          >
+            <Link to='/perfil'>
+              <AiOutlineUser className='icon-nav link-to-page iconProfile' />
+            </Link>
+          </li>
+        </div>
+      </div>
       {/* Se encargar de actualizar las páginas */}
       <Outlet />
       <nav className={`container-nav ${navItemToggleOn ? 'nav-abs' : ''}`.trim()}>

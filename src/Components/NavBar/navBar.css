@@ -1,76 +1,115 @@
 .container-nav {
-   position: fixed;
-   margin: 0.3rem 0.5rem;
-   padding: 0.5rem 1rem;
-   bottom: 0;
-   left: 0;
-   right: 0;
+  position: fixed;
+  margin: 0.3rem 0.5rem;
+  padding: 0.5rem 1rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-   border-radius: 2rem;
+  border-radius: 2rem;
 
-   /* background: linear-gradient(90deg, #1df816 0%, #f5a30c 100%); */
-   background-color: #004952;
+  background-color: #004952;
+}
+
+.headerNavContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding-right: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.3rem;
+
+  background-color: #004952;
+}
+.logoApp {
+  color: #fff;
+}
+.logoApp > a {
+  color: #fff;
+}
+
+.inputDateProfileContainer {
+  display: flex;
+  gap: 1rem;
+}
+.inputDateProfileContainer > input {
+  width: 5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.avatarProfile {
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 0.1rem;
+}
+
+.iconProfile {
+  color: #004952 !important;
 }
 
 .icon-nav {
-   height: 30px;
-   width: 30px;
-   color: #fff;
+  height: 30px;
+  width: 30px;
+  color: #fff;
 }
 
 .container-link {
-   display: flex;
-   justify-content: space-between;
-   margin: 0;
-   padding: 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
 }
 
 .link-to-page {
-   display: flex;
-   align-items: center;
-   width: max-content;
-   list-style: none;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  list-style: none;
 }
 
 .navItem-off {
-   opacity: 0;
-   height: 0;
-   overflow: hidden;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
 }
 
 .navItem-on {
-   padding: 0.5rem 1rem;
-   border-radius: 0.8rem;
-   background-color: #ffffff;
-   opacity: 1;
-   height: auto;
-   overflow: visible;
+  padding: 0.5rem 1rem;
+  border-radius: 0.8rem;
+  background-color: #ffffff;
+  opacity: 1;
+  height: auto;
+  overflow: visible;
 }
 
 .navItemText-on {
-   opacity: 1;
-   overflow: visible;
-   color: #004952;
-   font-weight: 500;
-   transition: opacity 5s ease-in-out, height 5s ease-in-out;
+  opacity: 1;
+  overflow: visible;
+  color: #004952;
+  font-weight: 500;
+  transition: opacity 5s ease-in-out, height 5s ease-in-out;
 }
 
 span {
-   margin-left: 0.7rem;
+  margin-left: 0.7rem;
 }
 
 .nav-abs {
-   z-index: 10000;
+  z-index: 10000;
 }
 
 .nav-icon-optionSelected {
-   color: #004952 !important;
-   height: 1.2rem;
-   width: 1.2rem;
+  color: #004952 !important;
+  height: 1.2rem;
+  width: 1.2rem;
 }
 
 .nav-icon-option {
-   color: #ffffff !important;
-   height: 1.2rem;
-   width: 1.2rem;
+  color: #ffffff !important;
+  height: 1.2rem;
+  width: 1.2rem;
 }
