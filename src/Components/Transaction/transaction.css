@@ -73,7 +73,14 @@
 }
 
 .notseeMoreDetails {
+  opacity: 0;
+  height: 0;
   animation: disapear 0s ease-in-out 0s 1 normal both;
+}
+
+.seeMoreDetails {
+  opacity: 1;
+  height: min-content;
 }
 
 .transaction-expense,

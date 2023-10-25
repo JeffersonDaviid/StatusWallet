@@ -11,7 +11,7 @@ const ButtonSecondary = ({ to, ...props }) => {
       {...props}
     >
       {to !== 'anyWhere' ? (
-        <Link to={`/${to}`}>
+        <Link to={`${to}`}>
           <b>{props.values}</b>
         </Link>
       ) : (

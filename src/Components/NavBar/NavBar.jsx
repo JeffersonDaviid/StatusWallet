@@ -17,9 +17,7 @@ const NavBar = () => {
 
     if (oldStatusNav) {
       setNavItemToggleOn(oldStatusNav)
-      console.log('Hola')
     }
-    console.log(navItemToggleOn)
   }, [])
 
   const updateStatusNavItemToggleOn = ({ property }) => {

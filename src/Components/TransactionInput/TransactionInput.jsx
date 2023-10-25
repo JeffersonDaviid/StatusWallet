@@ -378,18 +378,18 @@ const TransactionInput = () => {
 
       <div className='buttonsContainer'>
         <ButtonSecondary
-          to=''
+          to='/'
           values='Cancelar'
         />
 
         <ButtonPrimary
-          to=''
+          to='/'
           values='Guardar'
           className='btn btn-primary'
           type='submit'
           form='inputTrasactionForm'
           onClick={(e) => {
-            e.preventDefault()
+            // e.preventDefault()
             if (newTransaction.amount !== 0) handleSetNewTransaction(newTransaction)
           }}
         />

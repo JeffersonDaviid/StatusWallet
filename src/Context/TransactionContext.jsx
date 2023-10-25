@@ -3,11 +3,11 @@ import { useState, createContext, useEffect } from 'react'
 export const TransactionContext = createContext()
 
 export const TransactionContextProvider = ({ children }) => {
+  const [totalMoney, setTotalMoney] = useState({ wallet: 0, bank: 0 })
+  const [resumenTransactions, setResumenTransactions] = useState({})
   const [lsTransaction, setLsTransaction] = useState(
     JSON.parse(localStorage.getItem('registro'))
   )
-
-  const [resumenTransactions, setResumenTransactions] = useState({})
 
   const handleSetNewTransaction = (newTransaction) => {
     let newLsTransaction = lsTransaction
@@ -78,6 +78,7 @@ export const TransactionContextProvider = ({ children }) => {
     localStorage.setItem('registro', JSON.stringify(newLsTransaction))
 
     updateResumeTrasactions()
+    updateTotalMoney(transaction)
   }
 
   const findIndexOfTransaction = (newTransaction) => {
@@ -138,8 +139,50 @@ export const TransactionContextProvider = ({ children }) => {
     }
   }
 
+  const updateTotalMoney = (transaction) => {
+    let newTotal
+
+    if (transaction.type === 'income') {
+      if (transaction.destination === 'wallet') {
+        newTotal = {
+          ...totalMoney,
+          [transaction.destination]: totalMoney.wallet + parseFloat(transaction.amount),
+        }
+      } else {
+        newTotal = {
+          ...totalMoney,
+          [transaction.destination]: totalMoney.bank + parseFloat(transaction.amount),
+        }
+      }
+    }
+    if (transaction.type === 'expense') {
+      if (transaction.destination === 'wallet') {
+        newTotal = {
+          ...totalMoney,
+          [transaction.destination]: totalMoney.wallet - parseFloat(transaction.amount),
+        }
+      } else {
+        newTotal = {
+          ...totalMoney,
+          [transaction.destination]: totalMoney.bank - parseFloat(transaction.amount),
+        }
+      }
+    }
+
+    console.log(newTotal)
+
+    localStorage.setItem('totalMoney', JSON.stringify(newTotal))
+    setTotalMoney(newTotal)
+  }
+
   useEffect(() => {
     updateResumeTrasactions()
+
+    const totalCashInMemory = JSON.parse(localStorage.getItem('totalMoney'))
+    if (totalCashInMemory !== null) {
+      setTotalMoney(totalCashInMemory)
+    }
+    console.log(totalCashInMemory)
   }, [])
 
   return (
@@ -147,6 +190,7 @@ export const TransactionContextProvider = ({ children }) => {
       value={{
         lsTransaction,
         resumenTransactions,
+        totalMoney,
 
         handleSetNewTransaction,
       }}
