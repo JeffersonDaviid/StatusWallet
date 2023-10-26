@@ -112,3 +112,10 @@ span {
   height: 1.2rem;
   width: 1.2rem;
 }
+.icon-facebook {
+  color: #1d7cf2 !important;
+}
+
+.icon-twitter {
+  color: #000000 !important;
+}

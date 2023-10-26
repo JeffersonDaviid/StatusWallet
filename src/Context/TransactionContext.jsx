@@ -1,69 +1,152 @@
 import { useState, createContext, useEffect } from 'react'
+import { useAlert } from './AlertContext'
 
 export const TransactionContext = createContext()
 
 export const TransactionContextProvider = ({ children }) => {
+  const { showAlert } = useAlert()
+
   const [totalMoney, setTotalMoney] = useState({ wallet: 0, bank: 0 })
   const [resumenTransactions, setResumenTransactions] = useState({})
   const [lsTransaction, setLsTransaction] = useState(
-    JSON.parse(localStorage.getItem('registro'))
+    JSON.parse(localStorage.getItem('registro')) || []
   )
 
+  // const handleSetNewTransaction = (newTransaction) => {
+  //   let newLsTransaction = lsTransaction
+  //   const indexDay = findIndexOfTransaction(newTransaction)
+  //   const transaction = {
+  //     type: newTransaction.type,
+  //     category: newTransaction.category,
+  //     amount: newTransaction.amount,
+  //     description: newTransaction.description,
+  //     destination: newTransaction.destination,
+  //   }
+
+  //   // Si la fecha esta en la lista solo actualiza y agrega
+  //   if (indexDay !== -1) {
+  //     newLsTransaction[indexDay].data.push(transaction)
+  //     newLsTransaction[indexDay].totalDay = {
+  //       incomes: calculateResumeAmountDay('income', indexDay),
+  //       expenses: calculateResumeAmountDay('expense', indexDay),
+  //     }
+  //   } else {
+  //     // Si la fecha NO esta en la lista agrega
+
+  //     let totalDay
+  //     if (transaction.type === 'income') {
+  //       totalDay = {
+  //         incomes: transaction.amount,
+  //         expenses: 0,
+  //       }
+  //     }
+  //     if (transaction.type === 'expense') {
+  //       totalDay = {
+  //         incomes: 0,
+  //         expenses: transaction.amount,
+  //       }
+  //     }
+
+  //     // Si la lista NO esta vacia
+  //     if (newLsTransaction !== null) {
+  //       newLsTransaction.push({
+  //         date: newTransaction.date,
+  //         totalDay,
+  //         data: [transaction],
+  //       })
+  //     } else {
+  //       // Si la lista esta vacia
+  //       newLsTransaction = [
+  //         {
+  //           date: newTransaction.date,
+  //           totalDay,
+  //           data: [transaction],
+  //         },
+  //       ]
+  //     }
+  //   }
+
+  //   newLsTransaction.sort(function (a, b) {
+  //     if (parseInt(a.date.day) < parseInt(b.date.day)) {
+  //       return 1
+  //     }
+  //     if (parseInt(a.date.day) > parseInt(b.date.day)) {
+  //       return -1
+  //     }
+  //     // a must be equal to b
+  //     return 0
+  //   })
+
+  //   setLsTransaction(newLsTransaction)
+  //   localStorage.setItem('registro', JSON.stringify(newLsTransaction))
+
+  //   updateResumeTransactions()
+  //   updateTotalMoney(transaction)
+  // }
+
   const handleSetNewTransaction = (newTransaction) => {
-    let newLsTransaction = lsTransaction
+    console.log(newTransaction)
+    try {
+      const updatedTransactions = updateTransactions(newTransaction)
+      setLsTransaction(updatedTransactions)
+
+      updateResumeTransactions()
+      updateTotalMoney(newTransaction)
+      showAlert('Transaccion realizada con éxito')
+    } catch (error) {
+      console.error('Error al procesar la transacción', error)
+    }
+  }
+
+  const updateTransactions = (newTransaction) => {
+    let updatedTransactions = [...lsTransaction]
     const indexDay = findIndexOfTransaction(newTransaction)
+    const { type, category, amount, description, destination, date } = newTransaction
+
+    // Crea un objeto de transacción para la nueva transacción
     const transaction = {
-      type: newTransaction.type,
-      category: newTransaction.category,
-      amount: newTransaction.amount,
-      description: newTransaction.description,
-      destination: newTransaction.destination,
+      type,
+      category,
+      amount,
+      description,
+      destination,
     }
 
-    // Si la fecha esta en la lista solo actualiza y agrega
+    // ... Lógica para actualizar las transacciones ...
+    // Encuentra el índice de la transacción con la misma fecha
     if (indexDay !== -1) {
-      newLsTransaction[indexDay].data.push(transaction)
-      newLsTransaction[indexDay].totalDay = {
-        incomes: calculateResumeAmountDay('income', indexDay),
-        expenses: calculateResumeAmountDay('expense', indexDay),
+      const existingDay = updatedTransactions[indexDay]
+      existingDay.data.push(transaction)
+
+      // Actualiza el total del día
+      existingDay.totalDay = {
+        incomes:
+          type === 'income'
+            ? existingDay.totalDay.incomes + parseFloat(amount)
+            : existingDay.totalDay.incomes,
+        expenses:
+          type === 'expense'
+            ? existingDay.totalDay.expenses + parseFloat(amount)
+            : existingDay.totalDay.expenses,
       }
     } else {
-      // Si la fecha NO esta en la lista agrega
-
-      let totalDay
-      if (transaction.type === 'income') {
-        totalDay = {
-          incomes: transaction.amount,
-          expenses: 0,
-        }
-      }
-      if (transaction.type === 'expense') {
-        totalDay = {
-          incomes: 0,
-          expenses: transaction.amount,
-        }
+      // Si la fecha NO está en la lista, crea un nuevo día de transacción
+      const totalDay = {
+        incomes: type === 'income' ? parseFloat(amount) : 0,
+        expenses: type === 'expense' ? parseFloat(amount) : 0,
       }
 
-      // Si la lista NO esta vacia
-      if (newLsTransaction !== null) {
-        newLsTransaction.push({
-          date: newTransaction.date,
-          totalDay,
-          data: [transaction],
-        })
-      } else {
-        // Si la lista esta vacia
-        newLsTransaction = [
-          {
-            date: newTransaction.date,
-            totalDay,
-            data: [transaction],
-          },
-        ]
+      // Crea un nuevo día de transacción y agrégalo a la lista
+      const newDayTransaction = {
+        date,
+        totalDay,
+        data: [transaction],
       }
+
+      updatedTransactions.push(newDayTransaction)
     }
-
-    newLsTransaction.sort(function (a, b) {
+    // Ordenar las transacciones en orden descendente
+    updatedTransactions.sort(function (a, b) {
       if (parseInt(a.date.day) < parseInt(b.date.day)) {
         return 1
       }
@@ -74,11 +157,9 @@ export const TransactionContextProvider = ({ children }) => {
       return 0
     })
 
-    setLsTransaction(newLsTransaction)
-    localStorage.setItem('registro', JSON.stringify(newLsTransaction))
+    localStorage.setItem('registro', JSON.stringify(updatedTransactions))
 
-    updateResumeTrasactions()
-    updateTotalMoney(transaction)
+    return updatedTransactions
   }
 
   const findIndexOfTransaction = (newTransaction) => {
@@ -102,15 +183,15 @@ export const TransactionContextProvider = ({ children }) => {
     } else return -1
   }
 
-  const calculateResumeAmountDay = (type, index) => {
-    const lsFiltered = lsTransaction[index].data.filter((data) => data.type === type)
+  // const calculateResumeAmountDay = (type, index) => {
+  //   const lsFiltered = lsTransaction[index].data.filter((data) => data.type === type)
 
-    const total = lsFiltered.reduce((total, data) => {
-      return total + parseFloat(data.amount)
-    }, 0)
+  //   const total = lsFiltered.reduce((total, data) => {
+  //     return total + parseFloat(data.amount)
+  //   }, 0)
 
-    return total.toFixed(2) // Para obtener el resultado con 2 decimales
-  }
+  //   return total.toFixed(2) // Para obtener el resultado con 2 decimales
+  // }
 
   const calculateResumeAmount = (type) => {
     let total = 0
@@ -129,8 +210,8 @@ export const TransactionContextProvider = ({ children }) => {
     return parseFloat(total.toFixed(2)) // Para obtener el resultado con 2 decimales
   }
 
-  const updateResumeTrasactions = () => {
-    if (lsTransaction !== null) {
+  const updateResumeTransactions = () => {
+    if (lsTransaction !== null && lsTransaction.length !== 0) {
       setResumenTransactions({
         incomes: calculateResumeAmount('incomes'),
         expenses: calculateResumeAmount('expenses'),
@@ -174,7 +255,7 @@ export const TransactionContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    updateResumeTrasactions()
+    updateResumeTransactions()
 
     const totalCashInMemory = JSON.parse(localStorage.getItem('totalMoney'))
     if (totalCashInMemory !== null) {

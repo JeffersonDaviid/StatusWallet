@@ -116,9 +116,12 @@ export const useAuthMethods = () => {
   return {
     currentUser,
 
+    createNewUserWithEmailAndPassword,
+
     signInWithGooglePc,
     signInWithGoogleMobile,
     signInWithEmail,
+
     signOutSession,
   }
 }

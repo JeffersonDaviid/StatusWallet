@@ -6,18 +6,20 @@ import ButtonFloating from '../Components/ButtonFloating/ButtonFloating'
 import { TransactionContext } from '../Context/TransactionContext'
 
 import './home.css'
+import AlertRight from '../Components/Alert/AlertRight'
+import { useAlert } from '../Context/AlertContext'
 
 const Home = () => {
   const { lsTransaction, resumenTransactions } = useContext(TransactionContext)
+  const { showAlert, typeAlerts } = useAlert()
 
   return (
     <div className='home'>
       <TotalWallet />
-      {lsTransaction !== undefined && lsTransaction !== null && (
-        <ResumeTransaction resume={resumenTransactions} />
-      )}
+      {lsTransaction.length !== 0 && <ResumeTransaction resume={resumenTransactions} />}
 
-      {lsTransaction !== null && (
+      <AlertRight />
+      {lsTransaction.length !== 0 && (
         <div className='listMonth-transaction'>
           {lsTransaction.map((item, key) => {
             return (
