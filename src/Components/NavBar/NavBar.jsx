@@ -9,11 +9,14 @@ import { ImHome } from 'react-icons/im'
 
 import { AiOutlineSetting, AiOutlineBarChart, AiOutlineUser } from 'react-icons/ai'
 import { TransactionContext } from '../../Context/TransactionContext'
+import { useAuthMethods } from '../../Context/UserAuthContext'
 
 const NavBar = () => {
+  const { currentUser } = useAuthMethods()
+  const { getTodayMonthYear } = useContext(TransactionContext)
+
   const [navItemToggleOn, setNavItemToggleOn] = useState({ home: true })
 
-  const { getTodayMonthYear } = useContext(TransactionContext)
   useEffect(() => {
     const oldStatusNav = JSON.parse(sessionStorage.getItem('navData'))
 
@@ -87,7 +90,15 @@ const NavBar = () => {
             }
           >
             <Link to='/perfil'>
-              <AiOutlineUser className='icon-nav link-to-page iconProfile' />
+              {currentUser !== null && currentUser.photoURL != null ? (
+                <img
+                  src={currentUser.photoURL}
+                  alt='foto de perfil'
+                  className='icon-nav link-to-page avatarProfile'
+                />
+              ) : (
+                <AiOutlineUser className='icon-nav link-to-page iconProfile' />
+              )}
             </Link>
           </li>
         </div>

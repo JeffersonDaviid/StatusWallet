@@ -1,11 +1,13 @@
 .profileContainer {
-  border-top: 1px solid red;
-  text-align: center;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 3rem;
+}
+.profileContainer input:focus,
+.profileContainer input:active {
+  border: none;
+  outline: none;
 }
 
 .inputEmailPasswordContainer {
@@ -42,6 +44,8 @@
   width: 100%;
   border-radius: 1rem !important;
   background-color: #004952 !important;
+  margin-top: 1rem !important;
+  font-size: 0.9rem !important;
 }
 
 .forgetPassword {
@@ -53,7 +57,11 @@
 }
 
 .otherSigns {
+  text-align: center;
   width: 100%;
+}
+.otherSigns label {
+  font-size: 1rem;
 }
 
 .containerIcons {
@@ -66,8 +74,8 @@
   justify-content: center;
   align-items: center;
   background: #ffffff;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  height: 2rem;
+  height: 2.5rem;
   width: 4rem;
 }

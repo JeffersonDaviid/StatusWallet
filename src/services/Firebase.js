@@ -1,11 +1,7 @@
 // Start of conection to FIREBASE
 import { initializeApp } from 'firebase/app'
 // AUTHENTICATION
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from 'firebase/auth'
+import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 
 // Configurations for conection to Firebase THIS IS UNIQUE INFORMATION - IS A REGISTER OF THE APP
 const firebaseConfig = {
@@ -19,36 +15,7 @@ const firebaseConfig = {
 }
 
 // START FIREBASE
-export const app = initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
 
 export const auth = getAuth(app)
-
-// const email = prompt('Ingrese usuario')
-// const password = prompt('Ingrese contraseña')
-let user
-
-export const createNewUserWithEmailAndPassword = () => {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((newUser) => {
-      user = newUser.user
-      alert('Usuario ', user, ' ha sido registrado')
-      console.log(newUser)
-    })
-    .catch((error) => {
-      console.error('CODIGO ', error.code)
-      console.error('MENSAJE ', error.message)
-    })
-
-  console.log(user)
-}
-
-export const signInWithEmailAndPasswordFront = () => {
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userSignIn) => {
-      alert('Bievenido: ', userSignIn.user.email)
-    })
-    .catch((error) => {
-      console.error('Error', error.code)
-    })
-  console.log(user)
-}
+export const provider = new GoogleAuthProvider()
