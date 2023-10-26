@@ -6,11 +6,22 @@ export const TransactionContext = createContext()
 export const TransactionContextProvider = ({ children }) => {
   const { showAlert } = useAlert()
 
-  const [totalMoney, setTotalMoney] = useState({ wallet: 0, bank: 0 })
-  const [resumenTransactions, setResumenTransactions] = useState({})
+  const [totalMoney, setTotalMoney] = useState(
+    JSON.parse(localStorage.getItem('totalMoney')) || { bank: 0, wallet: 0 }
+  )
+  const [resumenTransactions, setResumenTransactions] = useState({
+    incomes: 0,
+    expenses: 0,
+    date:
+      dateConverter(getTodayDate()).month.slice(0, 3) +
+      ', ' +
+      dateConverter(getTodayDate()).year,
+  })
   const [lsTransaction, setLsTransaction] = useState(
     JSON.parse(localStorage.getItem('registro')) || []
   )
+  const [lsTransactionFiltered, setLsTransactionFiltered] = useState([])
+  const [dateForFilter, setDateForFilter] = useState(getTodayMonthYear())
 
   // const handleSetNewTransaction = (newTransaction) => {
   //   let newLsTransaction = lsTransaction
@@ -196,13 +207,13 @@ export const TransactionContextProvider = ({ children }) => {
   const calculateResumeAmount = (type) => {
     let total = 0
     if (type === 'incomes') {
-      total = lsTransaction.reduce((total, operation) => {
+      total = lsTransactionFiltered.reduce((total, operation) => {
         return total + parseFloat(operation.totalDay.incomes)
       }, 0)
     }
 
     if (type === 'expenses') {
-      total = lsTransaction.reduce((total, operation) => {
+      total = lsTransactionFiltered.reduce((total, operation) => {
         return total + parseFloat(operation.totalDay.expenses)
       }, 0)
     }
@@ -210,12 +221,43 @@ export const TransactionContextProvider = ({ children }) => {
     return parseFloat(total.toFixed(2)) // Para obtener el resultado con 2 decimales
   }
 
+  /**
+   * Funcion principal para calcular el total de trasacciones realizadas en el mes fijado
+   */
   const updateResumeTransactions = () => {
-    if (lsTransaction !== null && lsTransaction.length !== 0) {
+    const meses = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ]
+    const date = {
+      year: dateForFilter.substring(0, 4),
+      month: dateForFilter.substring(5, 7),
+    }
+
+    if (lsTransactionFiltered.length !== 0) {
       setResumenTransactions({
         incomes: calculateResumeAmount('incomes'),
         expenses: calculateResumeAmount('expenses'),
-        date: lsTransaction[0].date.month.slice(0, 3) + ', ' + lsTransaction[0].date.year,
+        date:
+          lsTransactionFiltered[0].date.month.slice(0, 3) +
+          ', ' +
+          lsTransactionFiltered[0].date.year,
+      })
+    } else {
+      setResumenTransactions({
+        incomes: 0,
+        expenses: 0,
+        date: meses[parseInt(date.month) - 1].slice(0, 3) + ', ' + date.year,
       })
     }
   }
@@ -255,21 +297,57 @@ export const TransactionContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    updateResumeTransactions()
-
     const totalCashInMemory = JSON.parse(localStorage.getItem('totalMoney'))
     if (totalCashInMemory !== null) {
       setTotalMoney(totalCashInMemory)
     }
+    // updateResumeTransactions()
   }, [])
+
+  useEffect(() => {
+    const meses = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ]
+    const date = {
+      year: dateForFilter.substring(0, 4),
+      month: dateForFilter.substring(5, 7),
+    }
+
+    let updatedLsTransactionFiltered = lsTransaction.filter((item) => {
+      return (
+        item.date.month === meses[parseInt(date.month) - 1] &&
+        item.date.year === date.year
+      )
+    })
+
+    setLsTransactionFiltered(updatedLsTransactionFiltered)
+    console.log('ls app con ' + date.month, updatedLsTransactionFiltered)
+  }, [dateForFilter])
+
+  useEffect(() => {
+    updateResumeTransactions()
+  }, [lsTransactionFiltered])
 
   return (
     <TransactionContext.Provider
       value={{
-        lsTransaction,
+        lsTransactionFiltered,
         resumenTransactions,
         totalMoney,
+        dateForFilter,
 
+        setDateForFilter,
         handleSetNewTransaction,
         dateConverter,
         getTodayDate,
@@ -314,7 +392,6 @@ const dateConverter = (date) => {
 const getTodayDate = () => {
   const currentDate = new Date()
   currentDate.setUTCHours(currentDate.getUTCHours() - 5) // Ecuador está en UTC-5
-  console.log(currentDate)
   return currentDate.toISOString().split('T')[0]
 }
 const getTodayMonthYear = () => {

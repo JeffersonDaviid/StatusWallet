@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useAlert } from './AlertContext'
 import { initializeApp } from 'firebase/app'
 import {
   getAuth,
@@ -24,7 +25,7 @@ const firebaseConfig = {
 }
 const app = initializeApp(firebaseConfig)
 
-export const UserAuthContext = createContext()
+const UserAuthContext = createContext()
 
 export const UserAuthContextProvider = ({ children }) => {
   const auth = getAuth(app)
@@ -57,15 +58,14 @@ export const UserAuthContextProvider = ({ children }) => {
 
 export const useAuthMethods = () => {
   const { auth, provider, currentUser, setCurrentUser } = useContext(UserAuthContext)
+  const { typeAlerts, showAlert } = useAlert()
 
   const createNewUserWithEmailAndPassword = (newUser) => {
     createUserWithEmailAndPassword(auth, newUser.email, newUser.password)
       .then((userCreated) => {
         // FALTA IMPLEMENTACION
       })
-      .catch((error) => {
-        console.error(error.message)
-      })
+      .catch((error) => handleErrorFirebase(error))
   }
 
   /**
@@ -74,9 +74,7 @@ export const useAuthMethods = () => {
   const signInWithGooglePc = () => {
     signInWithPopup(auth, provider)
       .then((result) => {})
-      .catch((error) => {
-        console.error(error.message)
-      })
+      .catch((error) => handleErrorFirebase(error))
   }
 
   /**
@@ -87,12 +85,7 @@ export const useAuthMethods = () => {
 
     getRedirectResult(auth)
       .then((result) => {})
-      .catch((error) => {
-        console.error(error.message)
-      })
-
-    updateNewUser('isLogged', true)
-    setUserLogged(auth.currentUser)
+      .catch((error) => console.error(error.message))
   }
 
   const signInWithEmail = (user) => {
@@ -100,17 +93,56 @@ export const useAuthMethods = () => {
       .then((userSignIn) => {
         setCurrentUser(userSignIn)
       })
-      .catch((error) => {
-        console.error(error.message)
-      })
+      .catch((error) => handleErrorFirebase(error))
   }
 
   const signOutSession = () => {
     signOut(auth)
       .then(() => {})
-      .catch((error) => {
-        console.error(error.message)
-      })
+      .catch((error) => handleErrorFirebase(error))
+  }
+
+  const handleErrorFirebase = (error) => {
+    if (error.code === 'auth/wrong-password') {
+      // Personaliza el mensaje de error para contraseña incorrecta
+      showAlert(
+        'La contraseña ingresada es incorrecta. Por favor, inténtalo de nuevo.',
+        typeAlerts.error
+      )
+    } else if (error.code === 'auth/user-not-found') {
+      // Personaliza el mensaje de error para usuario no encontrado
+      showAlert(
+        'No se encontró una cuenta con este correo electrónico. Regístrate o verifica tus credenciales.',
+        typeAlerts.error
+      )
+    } else if (error.code === 'auth/invalid-email') {
+      // Personaliza el mensaje de error para correo electrónico inválido
+      showAlert(
+        'El formato del correo electrónico es inválido. Por favor, verifica tu correo electrónico.',
+        typeAlerts.error
+      )
+    } else if (error.code === 'auth/invalid-login-credentials') {
+      // Personaliza el mensaje de error para correo electrónico inválido
+      showAlert(
+        'El formato del correo electrónico es inválido. Por favor, verifica tu correo electrónico.',
+        typeAlerts.error
+      )
+    } else if (error.code === 'auth/email-already-in-use') {
+      // Personaliza el mensaje de error para correo electrónico ya en uso
+      showAlert(
+        'Este correo electrónico ya está en uso. ¿Olvidaste tu contraseña?',
+        typeAlerts.error
+      )
+    } else if (error.code === 'auth/weak-password') {
+      // Personaliza el mensaje de error para contraseña débil
+      showAlert(
+        'La contraseña debe tener al menos 8 caracteres y contener números y letras.',
+        typeAlerts.error
+      )
+    } else {
+      // Manejar otros errores de autenticación de Firebase
+      console.error(error.message)
+    }
   }
 
   return {

@@ -7,21 +7,19 @@ import { TransactionContext } from '../Context/TransactionContext'
 
 import './home.css'
 import AlertRight from '../Components/Alert/AlertRight'
-import { useAlert } from '../Context/AlertContext'
 
 const Home = () => {
-  const { lsTransaction, resumenTransactions } = useContext(TransactionContext)
-  const { showAlert, typeAlerts } = useAlert()
+  const { lsTransactionFiltered, resumenTransactions } = useContext(TransactionContext)
 
   return (
     <div className='home'>
       <TotalWallet />
-      {lsTransaction.length !== 0 && <ResumeTransaction resume={resumenTransactions} />}
+      <ResumeTransaction resume={resumenTransactions} />
 
       <AlertRight />
-      {lsTransaction.length !== 0 && (
+      {lsTransactionFiltered.length !== 0 && (
         <div className='listMonth-transaction'>
-          {lsTransaction.map((item, key) => {
+          {lsTransactionFiltered.map((item, key) => {
             return (
               <Transaction
                 transaction={item}

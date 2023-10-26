@@ -13,7 +13,7 @@ import { useAuthMethods } from '../../Context/UserAuthContext'
 
 const NavBar = () => {
   const { currentUser } = useAuthMethods()
-  const { getTodayMonthYear } = useContext(TransactionContext)
+  const { dateForFilter, setDateForFilter } = useContext(TransactionContext)
 
   const [navItemToggleOn, setNavItemToggleOn] = useState({ home: true })
 
@@ -79,7 +79,10 @@ const NavBar = () => {
           <input
             type='month'
             min='2023-01'
-            defaultValue={getTodayMonthYear()}
+            defaultValue={dateForFilter}
+            onChange={(e) => {
+              setDateForFilter(e.target.value)
+            }}
           />
           <li
             className='link-to-page avatarProfile'
