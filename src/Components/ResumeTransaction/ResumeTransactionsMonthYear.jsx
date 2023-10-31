@@ -5,7 +5,7 @@ import { MdDateRange } from 'react-icons/md'
 
 import './resumeTransactions.css'
 
-const ResumeTransaction = ({ resume }) => {
+const ResumeTransactionsMonthYear = ({ resume }) => {
   return (
     <div className='resumen-container'>
       <div className='detail-container'>
@@ -72,4 +72,4 @@ const ResumeTransaction = ({ resume }) => {
   )
 }
 
-export default ResumeTransaction
+export default ResumeTransactionsMonthYear

@@ -23,6 +23,8 @@ export const TransactionContextProvider = ({ children }) => {
   const [lsTransactionFiltered, setLsTransactionFiltered] = useState([])
   const [dateForFilter, setDateForFilter] = useState(getTodayMonthYear())
 
+  const [resumeDayTransactions, setResumeDayTransactions] = useState(null)
+
   // const handleSetNewTransaction = (newTransaction) => {
   //   let newLsTransaction = lsTransaction
   //   const indexDay = findIndexOfTransaction(newTransaction)
@@ -296,15 +298,7 @@ export const TransactionContextProvider = ({ children }) => {
     setTotalMoney(newTotal)
   }
 
-  useEffect(() => {
-    const totalCashInMemory = JSON.parse(localStorage.getItem('totalMoney'))
-    if (totalCashInMemory !== null) {
-      setTotalMoney(totalCashInMemory)
-    }
-    // updateResumeTransactions()
-  }, [])
-
-  useEffect(() => {
+  const updateLsTransactionFiltered = () => {
     const meses = [
       'Enero',
       'Febrero',
@@ -324,7 +318,7 @@ export const TransactionContextProvider = ({ children }) => {
       month: dateForFilter.substring(5, 7),
     }
 
-    let updatedLsTransactionFiltered = lsTransaction.filter((item) => {
+    const updatedLsTransactionFiltered = lsTransaction.filter((item) => {
       return (
         item.date.month === meses[parseInt(date.month) - 1] &&
         item.date.year === date.year
@@ -332,8 +326,22 @@ export const TransactionContextProvider = ({ children }) => {
     })
 
     setLsTransactionFiltered(updatedLsTransactionFiltered)
-    console.log('ls app con ' + date.month, updatedLsTransactionFiltered)
+  }
+
+  useEffect(() => {
+    const totalCashInMemory = JSON.parse(localStorage.getItem('totalMoney'))
+    if (totalCashInMemory !== null) {
+      setTotalMoney(totalCashInMemory)
+    }
+  }, [])
+
+  useEffect(() => {
+    updateLsTransactionFiltered()
   }, [dateForFilter])
+
+  useEffect(() => {
+    updateLsTransactionFiltered()
+  }, [lsTransaction])
 
   useEffect(() => {
     updateResumeTransactions()
@@ -346,12 +354,14 @@ export const TransactionContextProvider = ({ children }) => {
         resumenTransactions,
         totalMoney,
         dateForFilter,
+        resumeDayTransactions,
 
         setDateForFilter,
         handleSetNewTransaction,
         dateConverter,
         getTodayDate,
         getTodayMonthYear,
+        setResumeDayTransactions,
       }}
     >
       {children}

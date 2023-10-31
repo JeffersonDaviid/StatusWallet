@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import Transaction from '../Components/Transaction/Transaction'
-import ResumeTransaction from '../Components/ResumeTransaction/ResumeTransactions'
+import ResumeTransactionsMonthYear from '../Components/ResumeTransaction/ResumeTransactionsMonthYear'
+import ResumeTransactionsDay from '../Components/ResumeTransaction/ResumeTransactionsDay'
 import TotalWallet from '../Components/TotalWallet/TotalWallet'
 import ButtonFloating from '../Components/ButtonFloating/ButtonFloating'
 import { TransactionContext } from '../Context/TransactionContext'
@@ -14,7 +15,7 @@ const Home = () => {
   return (
     <div className='home'>
       <TotalWallet />
-      <ResumeTransaction resume={resumenTransactions} />
+      <ResumeTransactionsMonthYear resume={resumenTransactions} />
 
       <AlertRight />
       {lsTransactionFiltered.length !== 0 && (

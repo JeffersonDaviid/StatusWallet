@@ -7,6 +7,7 @@ import Configuration from './pages/Configuration'
 import Reports from './pages/Reports'
 import Profile from './pages/Profile'
 import TransactionInput from './Components/TransactionInput/TransactionInput'
+import ResumeTransactionsDay from './Components/ResumeTransaction/ResumeTransactionsDay'
 
 function App() {
   return (
@@ -38,6 +39,10 @@ function App() {
           <Route
             path='/transaccion'
             Component={TransactionInput}
+          />
+          <Route
+            path='/resumen-del-dia'
+            Component={ResumeTransactionsDay}
           />
         </Routes>
         {/* </BrowserRouter> */}

@@ -36,7 +36,7 @@
   gap: 1rem;
 }
 .inputDateProfileContainer > input {
-  width: 5rem;
+  width: max-content;
   overflow: hidden;
   text-overflow: ellipsis;
 }

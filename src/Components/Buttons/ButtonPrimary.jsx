@@ -11,10 +11,10 @@ const ButtonPrimary = ({ to, ...props }) => {
     >
       {to !== 'anyWhere' ? (
         <Link to={`${to}`}>
-          <b>{props.values}</b>
+          <strong>{props.values}</strong>
         </Link>
       ) : (
-        <b>{props.values}</b>
+        <strong>{props.values}</strong>
       )}
     </button>
   )

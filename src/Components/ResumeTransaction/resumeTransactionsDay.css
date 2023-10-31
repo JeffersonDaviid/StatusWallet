@@ -1,0 +1,39 @@
+.resumeTransactionsDay {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.transactionDay-data {
+  margin-top: 0.8rem;
+  padding: 0.4rem;
+  color: #004952 !important;
+
+  border-radius: 5px;
+  background: #ffffff;
+  box-shadow: 5px 5px 12px #ebebeb, -5px -5px 12px #ffffff;
+}
+
+.transactionDay-information {
+  display: flex;
+  justify-content: space-between;
+}
+
+.transactionDay-information label {
+  min-width: max-content;
+}
+.transactionDay-information > div {
+  margin-left: 0.2rem;
+}
+
+.transaction-description {
+  flex-grow: 1;
+  margin: 0 0.4rem;
+}
+
+.resumeTransactionsDay button {
+  margin: 1rem;
+  padding: 1rem;
+  align-self: center;
+}

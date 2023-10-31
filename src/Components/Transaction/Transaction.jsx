@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 import './transaction.css'
 
@@ -21,9 +21,13 @@ import { SiShopify } from 'react-icons/si'
 import { GiMoneyStack, GiGraduateCap } from 'react-icons/gi'
 import { ImGift } from 'react-icons/im'
 import { FaBus } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import { TransactionContext } from '../../Context/TransactionContext'
 
 const Transaction = ({ transaction }) => {
   const [seeMoreDetails, setSeeMoreDetails] = useState(false)
+  const { resumeDayTransactions, setResumeDayTransactions } =
+    useContext(TransactionContext)
 
   const renderNameType = (category) => {
     switch (category) {
@@ -87,7 +91,14 @@ const Transaction = ({ transaction }) => {
   }
 
   return (
-    <div className='transaction'>
+    <Link
+      className='transaction'
+      to='/resumen-del-dia'
+      onClick={() => {
+        setResumeDayTransactions(transaction)
+        console.log(resumeDayTransactions)
+      }}
+    >
       <div className='transaction-data'>
         <div className='transaction-date'>
           <span className='transaction-date-day'>{transaction.date.day}</span>
@@ -149,7 +160,7 @@ const Transaction = ({ transaction }) => {
           )
         })}
       </div>
-    </div>
+    </Link>
   )
 }
 
